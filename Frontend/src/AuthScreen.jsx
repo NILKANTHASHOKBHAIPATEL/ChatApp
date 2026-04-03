@@ -74,8 +74,8 @@ function AuthScreen() {
 
   const handleSubmit = async () => {
     const url = isLogin
-      ? "http://localhost:8080/api/auth/login"
-      : "http://localhost:8080/api/auth/register";
+      ? "https://chatapp-biu3.onrender.com/api/auth/login"
+      : "https://chatapp-biu3.onrender.com/api/auth/register";
 
     const body = isLogin
       ? { email, password }

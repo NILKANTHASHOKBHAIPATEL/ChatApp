@@ -9,7 +9,7 @@ function Sidebar() {
     const getAllThreads = async () => {
         try {
             // const response = await fetch("http://localhost:8080/api/thread");
-            const response = await fetch("http://localhost:8080/api/thread", {
+            const response = await fetch("https://chatapp-biu3.onrender.com/api/thread", {
                 headers: {
                     "Authorization": localStorage.getItem("token")
                 }
@@ -54,7 +54,7 @@ function Sidebar() {
 
         try {
             // const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`);
-            const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`, {
+            const response = await fetch(`https://chatapp-biu3.onrender.com/api/thread/${newThreadId}`, {
                 headers: {
                     "Authorization": localStorage.getItem("token")
                 }
@@ -72,7 +72,7 @@ function Sidebar() {
     const deleteThread = async (threadId) => {
         try {
             // const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, {method: "DELETE"});
-            const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, {
+            const response = await fetch(`https://chatapp-biu3.onrender.com/api/thread/${threadId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": localStorage.getItem("token")
