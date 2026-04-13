@@ -1,6 +1,8 @@
 import "dotenv/config";
 
-const getGeminiAPIResponse = async (message) => {
+const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+const getGeminiAPIResponse = async (message, retries = 2) => {
     try {
         const apiKey = process.env.GEMINI_API_KEY;
 
@@ -13,16 +15,10 @@ const getGeminiAPIResponse = async (message) => {
                 },
                 body: JSON.stringify({
                     contents: [
-                        {
-                            parts: [
-                                {
-                                    text: message   
-                                }
-                            ]
-                        }
+                        { parts: [{ text: message }] }
                     ],
                     generationConfig: {
-                        maxOutputTokens: 5000
+                        maxOutputTokens: 1000   // 🔥 IMPORTANT
                     }
                 })
             }
@@ -30,14 +26,32 @@ const getGeminiAPIResponse = async (message) => {
 
         const data = await response.json();
 
-        const reply =
-            data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
+        console.log("🔥 FULL GEMINI RESPONSE:");
+        console.log(JSON.stringify(data, null, 2));
 
-        return reply;    
+        console.log("GEMINI RESPONSE:", data);
+
+        // 🔥 HANDLE API ERROR
+        if (data.error) {
+            console.log("❌ Gemini error:", data.error);
+            return "⚠️ AI service error. Try again later.";
+        }
+
+        // 🔥 RETRY IF NO RESPONSE
+        if (!data.candidates || !data.candidates.length) {
+            if (retries > 0) {
+                console.log("🔁 Retrying...");
+                await delay(1000);  // wait 1 sec
+                return getGeminiAPIResponse(message, retries - 1);
+            }
+            return "⚠️ AI is busy. Try again.";
+        }
+
+        return data.candidates[0]?.content?.parts?.[0]?.text;
 
     } catch (err) {
-        console.log(err);
-        return "Error generating response";  
+        console.log("🔥 ERROR:", err);
+        return "⚠️ Error generating response";
     }
 };
 

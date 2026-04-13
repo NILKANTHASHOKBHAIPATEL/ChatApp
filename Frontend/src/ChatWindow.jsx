@@ -12,10 +12,12 @@ function ChatWindow() {
 
 
     const getReply = async () => {
+        if (!prompt.trim()) return;
         setLoading(true);
         setNewChat(false);
 
         console.log("message ", prompt, " threadId ", currThreadId);
+        await new Promise(res => setTimeout(res, 500)); // 🔥 ADD THIS
         const options = {
             method: "POST",
             headers: {
@@ -32,7 +34,7 @@ function ChatWindow() {
             const response = await fetch("https://chatapp-biu3.onrender.com/api/chat", options);
             const res = await response.json();
             console.log(res);
-            setReply(res.reply);
+            setReply(res.reply || "⚠️ No response from AI");
         } catch(err) {
             console.log(err);
         }
