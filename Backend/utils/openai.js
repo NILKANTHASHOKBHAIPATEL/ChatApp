@@ -33,8 +33,8 @@ const getGeminiAPIResponse = async (message, retries = 2) => {
 
         // 🔥 HANDLE API ERROR
         if (data.error) {
-            console.log("❌ Gemini error:", data.error);
-            return "⚠️ AI service error. Try again later.";
+            console.log("🔥 GEMINI ERROR:", data.error);   // 🔥 ADD THIS
+            return "⚠️ " + data.error.message;
         }
 
         // 🔥 RETRY IF NO RESPONSE
