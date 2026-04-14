@@ -18,7 +18,7 @@ const getGeminiAPIResponse = async (message, retries = 2) => {
                         { parts: [{ text: message }] }
                     ],
                     generationConfig: {
-                        maxOutputTokens: 1000   // 🔥 IMPORTANT
+                        maxOutputTokens: 5000   // 🔥 IMPORTANT
                     }
                 })
             }
