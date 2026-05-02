@@ -156,7 +156,7 @@ function ChatWindow() {
 
             <Chat></Chat>
 
-            <ScaleLoader color="#fff" loading={loading}>
+            <ScaleLoader className="loaderCom" color="#fff" loading={loading}>
 
             </ScaleLoader>
             <div className="chatInput">
